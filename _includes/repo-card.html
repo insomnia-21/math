@@ -1,0 +1,43 @@
+<div class="github-component d-flex flex-column flex-justify-between height-full text-left {% if site.style == 'dark' %}box-shadow{% else %}border border-gray-light{% endif %} bg-white rounded-1 p-3">
+  <div>
+    <div class="d-flex flex-justify-between flex-items-start mb-1">
+      <h1 class="f4 lh-condensed mb-1">
+        <a href="{{ repository.html_url }}">
+          {% octicon repo height:20 class:"mr-1 v-align-middle" fill:"#586069" aria-label:repo %}
+          {{ repository.name | escape }}
+        </a>
+      </h1>
+    </div>
+    {% unless repository.topics == 0 %}
+      <div class="mb-1">
+        {% for topic in repository.topics limit: 4 %}
+          <a class="label bg-blue-light text-blue" href="https://github.com/topics/{{ topic }}">
+            {{ topic | truncate: 10 }}
+          </a>
+        {% endfor %}
+      </div>
+    {% endunless %}
+    <div class="text-gray mb-2 ws-normal">{{ repository.description | escape }}</div>
+  </div>
+  <div class="d-flex f6">
+    {% if repository.language %}
+        <span class="repo-language-color ml-0 mr-1" style="background-color:{{ site.data.colors[repository.language]["color"] }}"></span>
+        <span class="mr-3" itemprop="programmingLanguage">{{ repository.language | escape }}</span>
+    {% endif %}
+    {% if repository.stargazers_count %}
+      <a href="{{ repository.html_url }}/stargazers" class="d-inline-block link-gray mr-4">
+        {% octicon star width:14 height:16 class:"mr-1" color:{{ icon_color }} aria-label:star %}{{ repository.stargazers_count }}
+      </a>
+    {% endif %}
+    {% if repository.watchers_count %}
+      <a href="{{ repository.html_url }}/watchers" class="d-inline-block link-gray mr-4">
+          {% octicon eye width:14 height:16 class:"mr-1" color:{{ icon_color }} aria-label:forks %}{{ repository.watchers_count }}
+      </a>
+    {% endif %}
+    {% if repository.forks_count %}
+      <a href="{{ repository.html_url }}/network/members" class="d-inline-block link-gray mr-4">
+        {% octicon git-branch width:10 height:16 class:"mr-1" color:{{ icon_color }} aria-label:forks %}{{ repository.forks_count }}
+      </a>
+    {% endif %}
+  </div>
+</div>
